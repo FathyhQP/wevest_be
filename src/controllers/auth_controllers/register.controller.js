@@ -2,7 +2,8 @@ const { prisma } = require("../../config/prisma");
 const bcrypt = require("bcryptjs");
 
 const register = async (req, res) => {
-  const { fullname, username, email, phone, password } = req.body;
+  const { fullname, username, email, phone, job_status, field, password } =
+    req.body;
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -13,6 +14,8 @@ const register = async (req, res) => {
         username,
         email,
         phone,
+        job_status,
+        field,
         password: hashedPassword,
       },
     });

@@ -30,8 +30,6 @@ const verifyToken = async (req, res, next) => {
       message: "Must be logged in",
       data: null,
     });
-
-    next(err);
   }
 };
 

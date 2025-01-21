@@ -15,6 +15,8 @@ const validateUserInput = async (req, res, next) => {
       "fullname",
       "username",
       "email",
+      "phone",
+      "job_status",
       "password",
       "confirm_password",
     ];
@@ -86,6 +88,20 @@ const validateUserInput = async (req, res, next) => {
         message: "Phone number must be between 10 and 13 characters",
       });
     }
+  }
+
+  if (
+    userData.jobs_status &&
+    userData.jobs_status !== "TIDAK_BEKERJA" &&
+    userData.jobs_status !== "BEKERJA" &&
+    userData.jobs_status !== "MAHASISWA"
+  ) {
+    return res.status(400).send({
+      status_code: 400,
+      success: false,
+      message:
+        "Job status must be either 'TIDAK_BEKERJA', 'BEKERJA', or 'MAHASISWA'",
+    });
   }
 
   if (userData.password) {
