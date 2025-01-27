@@ -21,19 +21,13 @@ model User {
   username   String    @unique
   email      String    @unique
   phone      String    @unique
-  job_status JobStatus @default(TIDAK_BEKERJA)
+  job_status String
   field      String?
   password   String
   avatar     String?
   role       Role      @default(CUSTOMER)
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
-}
-
-enum JobStatus {
-  TIDAK_BEKERJA
-  MAHASISWA
-  BEKERJA
 }
 
 enum Role {
