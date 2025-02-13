@@ -5,14 +5,24 @@ const bodyParser = require("body-parser");
 
 const appMiddleware = express();
 
+const allowedOrigins = [
+  "http://localhost:3000", // Frontend development
+  "https://wevest.id", // Add your production frontend domain
+];
+
 appMiddleware.use(
-  // cors({
-  //   origin: "http://localhost:3000",
-  //   credentials: true,
-  //   preflightContinue: false,
-  //   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  // })
-  cors()
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or Postman)
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+    preflightContinue: false,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  })
 );
 
 
