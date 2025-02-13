@@ -6,13 +6,15 @@ const bodyParser = require("body-parser");
 const appMiddleware = express();
 
 appMiddleware.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-    preflightContinue: false,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  })
+  // cors({
+  //   origin: "http://localhost:3000",
+  //   credentials: true,
+  //   preflightContinue: false,
+  //   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  // })
+  cors()
 );
+
 
 appMiddleware.options("*", cors());
 appMiddleware.use(bodyParser.json());
