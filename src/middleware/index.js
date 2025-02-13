@@ -7,7 +7,7 @@ const appMiddleware = express();
 
 appMiddleware.use(
   cors({
-    origin: "*",
+    origin: "http://wevest.id",
     credentials: true,
     preflightContinue: false,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
