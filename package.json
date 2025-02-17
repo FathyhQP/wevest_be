@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "./src/index.js",
   "scripts": {
-    "start": "node ./src/index.js -H 8.8.8.8 -p 3001",
+    "start": "node ./src/index.js -p 3001",
     "dev": "nodemon ./src/index.js"
   },
   "keywords": [],
