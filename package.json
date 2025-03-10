@@ -1,7 +1,7 @@
 {
   "name": "idk",
   "version": "1.0.0",
-  "homepage": "."
+  "homepage": ".",
   "main": "./src/index.js",
   "scripts": {
     "start": "node ./src/index.js -p 3001",
