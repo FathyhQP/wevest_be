@@ -6,6 +6,9 @@ const bodyParser = require("body-parser");
 const appMiddleware = express();
 
 const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:5175",
   "http://localhost:3000", // Frontend development
   "https://wevest.id", // Add your production frontend domain
 ];
