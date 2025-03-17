@@ -1,5 +1,6 @@
 const { prisma } = require("../../config/prisma");
 const bcrypt = require("bcryptjs");
+const { uploadFile } = require("../../utils/upload-file");
 const createUser = async (req, res) => {
   const {
     fullname,
@@ -11,7 +12,22 @@ const createUser = async (req, res) => {
     password,
     role,
   } = req.body;
+
+  const avatar = req.files?.avatar;
   try {
+    let uploadedAvatar = null;
+
+    if (avatar && !Array.isArray(avatar)) {
+      const allowedExtensions = ['.png', '.jpg', '.jpeg'];
+      const destinationPath = `./public/uploads/avatars`;
+
+      uploadedAvatar = await uploadFile(
+        avatar,
+        destinationPath,
+        allowedExtensions
+      );
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await prisma.user.create({
       data: {
@@ -24,6 +40,7 @@ const createUser = async (req, res) => {
         field,
         password: hashedPassword,
         role,
+        avatar: uploadedAvatar,
       },
     });
 

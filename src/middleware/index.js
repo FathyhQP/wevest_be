@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const appRouter = require("../routes");
 const bodyParser = require("body-parser");
+const fileUpload = require("express-fileupload");
 
 const appMiddleware = express();
 
@@ -32,6 +33,9 @@ appMiddleware.use(
 appMiddleware.options("*", cors());
 appMiddleware.use(bodyParser.json());
 appMiddleware.use(bodyParser.urlencoded({ extended: true }));
+appMiddleware.use(express.json());
+appMiddleware.use(express.urlencoded({ extended: true }));
+appMiddleware.use(fileUpload());
 appMiddleware.use(express.static("public"));
 appMiddleware.use(appRouter);
 
