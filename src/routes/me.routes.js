@@ -1,8 +1,8 @@
 const { Router } = require("express");
 const { verifyToken } = require("../middleware/auth");
-const { getMe } = require("../controllers/me/get_me.controller");
-const { updateMe } = require("../controllers/me/update_me.controller");
-const { deleteMe } = require("../controllers/me/delete_me.controller");
+const { getMe } = require("../controllers/me_controllers/get_me.controller");
+const { updateMe } = require("../controllers/me_controllers/update_me.controller");
+const { deleteMe } = require("../controllers/me_controllers/delete_me.controller");
 
 const meRouter = Router();
 
