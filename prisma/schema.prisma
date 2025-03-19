@@ -15,22 +15,132 @@ datasource db {
 }
 
 model User {
-  id         String    @id @default(uuid())
-  user_code  String    @unique
-  fullname   String
-  username   String    @unique
-  email      String    @unique
-  phone      String    @unique
-  job_status String
-  field      String?
-  password   String
-  avatar     String?
-  role       Role      @default(CUSTOMER)
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
+  id                 String             @id @default(uuid())
+  user_code          String             @unique
+  fullname           String
+  username           String             @unique
+  email              String             @unique
+  phone              String             @unique
+  job_status         String
+  field              String?
+  password           String
+  avatar             String?
+  role               Role               @default(CUSTOMER)
+  created_at         DateTime           @default(now())
+  updated_at         DateTime           @updatedAt
+  transactions       Transaction[]
+  purchased_products PurchasedProduct[]
+  course_access      CourseAccess?
 }
 
 enum Role {
   CUSTOMER
   ADMIN
+}
+
+model DigitalProduct {
+  id                 String             @id @default(uuid())
+  title              String
+  description        String             @db.Text
+  price              Float
+  file_path          String
+  thumbnail          String?
+  category           String
+  created_at         DateTime           @default(now())
+  updated_at         DateTime           @updatedAt
+  purchased_products PurchasedProduct[]
+}
+
+model CoursePackage {
+  id            String         @id @default(uuid())
+  name          String         @unique
+  description   String         @db.Text
+  price         Float
+  features      String         @db.Text
+  level         PackageLevel
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @updatedAt
+  course_access CourseAccess[]
+}
+
+enum PackageLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+model Course {
+  id          String        @id @default(uuid())
+  title       String
+  description String        @db.Text
+  thumbnail   String?
+  videos      CourseVideo[]
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
+}
+
+model CourseVideo {
+  id          String   @id @default(uuid())
+  title       String
+  description String   @db.Text
+  youtube_url String
+  duration    Int
+  order       Int
+  course_id   String
+  course      Course   @relation(fields: [course_id], references: [id], onDelete: Cascade)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Transaction {
+  id                String            @id @default(uuid())
+  user_id           String
+  user              User              @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  amount            Float
+  payment_proof     String            @db.Text
+  status            TransactionStatus @default(PENDING)
+  transaction_type  TransactionType
+  product_id        String?
+  package_id        String?
+  created_at        DateTime          @default(now())
+  updated_at        DateTime          @updatedAt
+  purchased_product PurchasedProduct?
+  course_access     CourseAccess?
+}
+
+enum TransactionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum TransactionType {
+  DIGITAL_PRODUCT
+  COURSE_PACKAGE
+}
+
+model PurchasedProduct {
+  id             String         @id @default(uuid())
+  user_id        String
+  user           User           @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  product_id     String
+  product        DigitalProduct @relation(fields: [product_id], references: [id])
+  transaction_id String         @unique
+  transaction    Transaction    @relation(fields: [transaction_id], references: [id])
+  download_link  String
+  created_at     DateTime       @default(now())
+  updated_at     DateTime       @updatedAt
+}
+
+model CourseAccess {
+  id             String        @id @default(uuid())
+  user_id        String        @unique
+  user           User          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  package_id     String
+  package        CoursePackage @relation(fields: [package_id], references: [id])
+  transaction_id String        @unique
+  transaction    Transaction   @relation(fields: [transaction_id], references: [id])
+  valid_until    DateTime?
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @updatedAt
 }
