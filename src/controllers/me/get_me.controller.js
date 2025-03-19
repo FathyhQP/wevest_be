@@ -1,11 +1,13 @@
-import { prisma } from "../../config/prisma";
+const { prisma } = require("../../config/prisma");
 
-export const getMe = async (req, res) => {
+const getMe = async (req, res) => {
   try {
     const { user_code } = req.user;
 
-    const user = await prisma.user.findOne({ user_code });
-    
+    const user = await prisma.user.findUnique({
+      where: { user_code },
+    });
+
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -29,3 +31,5 @@ export const getMe = async (req, res) => {
     });
   }
 };
+
+module.exports = { getMe };
