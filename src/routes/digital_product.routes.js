@@ -7,7 +7,7 @@ const { createProduct } = require("../controllers/digital_product_controllers/cr
 
 const meRouter = Router();
 
-meRouter.get("/digital-product", verifyToken, getAllProducts);
+meRouter.get("/digital-product", getAllProducts);
 meRouter.patch("/digital-product/:id", verifyToken, authorizeRole("ADMIN"), updateProduct);
 meRouter.post("/digital-product", verifyToken, authorizeRole("ADMIN"), createProduct);
 
