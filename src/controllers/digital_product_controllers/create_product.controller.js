@@ -20,7 +20,7 @@ const createProduct = async (req, res) => {
       });
     }
 
-    const fileAllowedExtensions = [".pdf", ".zip", ".doc", ".docx"];
+    const fileAllowedExtensions = [".pdf", ".zip", ".doc", ".docx", ".xlsx", ".xls", ".ppt", ".pptx"];
     const fileDestinationPath = `./public/uploads/digital_products`;
 
     uploadedFile = await uploadFile(
