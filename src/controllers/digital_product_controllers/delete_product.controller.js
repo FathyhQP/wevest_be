@@ -1,3 +1,7 @@
+const { prisma } = require("../../config/prisma");
+const fs = require("fs");
+
+
 const deleteProduct = async (req, res) => {
   const { id } = req.params;
 
@@ -24,12 +28,12 @@ const deleteProduct = async (req, res) => {
       });
     }
     
-    if (digitalProduct.thumbnail && fs.existsSync(digitalProduct.thumbnail)) {
-      fs.unlinkSync(digitalProduct.thumbnail);
+    if (product.thumbnail && fs.existsSync(product.thumbnail)) {
+      fs.unlinkSync(product.thumbnail);
     }
 
-    if (digitalProduct.file_path && fs.existsSync(digitalProduct.file_path)) {
-      fs.unlinkSync(digitalProduct.file_path);
+    if (product.file_path && fs.existsSync(product.file_path)) {
+      fs.unlinkSync(product.file_path);
     }
 
     await prisma.digitalProduct.delete({
@@ -51,3 +55,5 @@ const deleteProduct = async (req, res) => {
     });
   }
 };
+
+module.exports = deleteProduct;
