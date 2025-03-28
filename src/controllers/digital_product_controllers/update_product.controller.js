@@ -5,7 +5,7 @@ const path = require("path");
 
 const updateProduct = async (req, res) => {
   const { id } = req.params;
-  const { title, description, price, category } = req.body;
+  const { title, description, price, category, tag } = req.body;
   const file = req.files?.file;
   const thumbnail = req.files?.thumbnail;
 
@@ -28,6 +28,7 @@ const updateProduct = async (req, res) => {
     if (title) updateData.title = title;
     if (description) updateData.description = description;
     if (category) updateData.category = category;
+    if (tag) updateData.tag = tag;
 
     if (price) {
       const productPrice = parseFloat(price);

@@ -8,6 +8,7 @@ const getAllProducts = async (req, res) => {
       search = "",
       category,
       sort = "newest",
+      tag,
     } = req.query;
 
     const pageNumber = parseInt(page);
@@ -38,6 +39,10 @@ const getAllProducts = async (req, res) => {
 
     if (category) {
       where.category = category;
+    }
+
+    if (tag) {
+      where.tag = tag;
     }
 
     let orderBy = {};
@@ -79,6 +84,10 @@ const getAllProducts = async (req, res) => {
           limit: limitNumber,
           totalPages,
         },
+        sort: sort,
+        search: search,
+        category: category,
+        tag: tag,
       },
     });
   } catch (error) {
