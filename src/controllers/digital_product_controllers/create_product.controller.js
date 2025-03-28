@@ -2,7 +2,7 @@ const { prisma } = require("../../config/prisma");
 const { uploadFile } = require("../../utils/upload-file");
 
 const createProduct = async (req, res) => {
-  const { title, description, price, category } = req.body;
+  const { title, description, price, category, tag } = req.body;
 
   const file = req.files?.file;
   const thumbnail = req.files?.thumbnail;
@@ -58,6 +58,7 @@ const createProduct = async (req, res) => {
         file_path: uploadedFile,
         thumbnail: uploadedThumbnail,
         category,
+        tag
       },
     });
 

@@ -46,6 +46,7 @@ model DigitalProduct {
   file_path          String
   thumbnail          String?
   category           String
+  tag               String?
   created_at         DateTime           @default(now())
   updated_at         DateTime           @updatedAt
   purchased_products PurchasedProduct[]
