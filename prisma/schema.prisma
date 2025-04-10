@@ -98,8 +98,8 @@ model Transaction {
   user_id           String
   user              User              @relation(fields: [user_id], references: [id], onDelete: Cascade)
   amount            Float
-  payment_proof     String            @db.Text
-  status            TransactionStatus @default(PENDING)
+  payment_proof     String?            @db.Text
+  status            TransactionStatus @default(UNPAID)
   transaction_type  TransactionType
   product_id        String?
   package_id        String?
@@ -110,6 +110,7 @@ model Transaction {
 }
 
 enum TransactionStatus {
+  UNPAID
   PENDING
   APPROVED
   REJECTED
