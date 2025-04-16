@@ -14,16 +14,37 @@ const allowedOrigins = [
   "http://localhost:3000",
   "https://203.194.114.83",
   "https://wevest.id",
-  "https://wevest-react.vercel.app"
+  "https://wevest-react.vercel.app",
 ];
+
+// appMiddleware.use(
+//   cors({
+//     origin: function (origin, callback) {
+
+//       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+//         return callback(null, true);
+//       }
+//       return callback(new Error("Not allowed by CORS"));
+//     },
+//     credentials: true,
+//     preflightContinue: false,
+//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   })
+// );
 
 appMiddleware.use(
   cors({
-    origin: "*",
+    origin: true,
+    credentials: true,
     preflightContinue: false,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE, OPTIONS",
   })
 );
+
+appMiddleware.use((req, res, next) => {
+  res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+  next();
+});
 
 appMiddleware.use(bodyParser.json());
 appMiddleware.use(bodyParser.urlencoded({ extended: true }));
