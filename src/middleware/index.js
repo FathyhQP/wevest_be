@@ -11,8 +11,10 @@ const allowedOrigins = [
   "http://localhost:5174",
   "http://203.194.114.83",
   "http://localhost:5175",
-  "http://localhost:3000", // Frontend development
-  "https://wevest.id", // Add your production frontend domain
+  "http://localhost:3000",
+  "https://203.194.114.83",
+  "https://wevest.id",
+  "https://wevest-react.vercel.app"
 ];
 
 appMiddleware.use(
