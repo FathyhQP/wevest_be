@@ -19,13 +19,14 @@ const allowedOrigins = [
 
 appMiddleware.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or Postman)
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-        return callback(null, true);
-      }
-      return callback(new Error("Not allowed by CORS"));
-    },
+    // origin: function (origin, callback) {
+    //   // Allow requests with no origin (like mobile apps or Postman)
+    //   if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    //     return callback(null, true);
+    //   }
+    //   return callback(new Error("Not allowed by CORS"));
+    // },
+    origin: '*',
     credentials: true,
     preflightContinue: false,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
