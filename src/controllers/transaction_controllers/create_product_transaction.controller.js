@@ -42,7 +42,6 @@ const createProductTransaction = async (req, res) => {
         product_id: product_id,
         user_id: id,
         amount: product.price,
-        transaction_type: "DIGITAL_PRODUCT",
       },
     });
 
