@@ -1,14 +1,14 @@
 const { prisma } = require("../../config/prisma");
 
 const createProductTransaction = async (req, res) => {
-  const { product_id: product_id } = req.params;
+  const { digital_product_id: digital_product_id } = req.params;
   const { id } = req.user;
 
-  if (!product_id) {
+  if (!digital_product_id) {
     return res.status(400).json({
       success: false,
       status: 400,
-      message: "Product code is required",
+      message: "Product ID is required",
       data: null,
     });
   }
@@ -25,7 +25,7 @@ const createProductTransaction = async (req, res) => {
   try {
     const product = await prisma.digitalProduct.findUnique({
       where: {
-        id: product_id,
+        id: digital_product_id,
       },
     });
     if (!product) {
@@ -39,7 +39,7 @@ const createProductTransaction = async (req, res) => {
     
     const transaction = await prisma.transaction.create({
       data: {
-        product_id: product_id,
+        digital_product_id: digital_product_id,
         user_id: id,
         amount: product.price,
       },
