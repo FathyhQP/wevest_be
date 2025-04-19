@@ -15,20 +15,20 @@ datasource db {
 }
 
 model User {
-  id                 String             @id @default(uuid())
-  user_code          String             @unique
-  fullname           String
-  username           String             @unique
-  email              String             @unique
-  phone              String             @unique
-  job_status         String
-  field              String?
-  password           String
-  avatar             String?
-  role               Role               @default(CUSTOMER)
-  created_at         DateTime           @default(now())
-  updated_at         DateTime           @updatedAt
-  transactions       Transaction[]
+  id           String        @id @default(uuid())
+  user_code    String        @unique
+  fullname     String
+  username     String        @unique
+  email        String        @unique
+  phone        String        @unique
+  job_status   String
+  field        String?
+  password     String
+  avatar       String?
+  role         Role          @default(CUSTOMER)
+  created_at   DateTime      @default(now())
+  updated_at   DateTime      @updatedAt
+  transactions Transaction[]
 }
 
 enum Role {
@@ -51,18 +51,17 @@ model DigitalProduct {
 }
 
 model Transaction {
-  id            String            @id @default(uuid())
-  user_id       String
-  user          User              @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  amount        Float
-  payment_proof String?           @db.Text
-  status        TransactionStatus @default(UNPAID)
-  product_id    String?
-  product       DigitalProduct?   @relation(fields: [product_id], references: [id], onDelete: Cascade)
-
-  created_at        DateTime          @default(now())
-  updated_at        DateTime          @updatedAt
-  purchased_product PurchasedProduct?
+  id                 String            @id @default(uuid())
+  amount             Float
+  payment_proof      String?           @db.Text
+  status             TransactionStatus @default(UNPAID)
+  created_at         DateTime          @default(now())
+  updated_at         DateTime          @updatedAt
+  user_id            String
+  digital_product_id String?
+  user               User              @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  digital_product    DigitalProduct?   @relation(fields: [digital_product_id], references: [id], onDelete: Cascade)
+  purchased_product  PurchasedProduct?
 }
 
 enum TransactionStatus {
@@ -73,11 +72,10 @@ enum TransactionStatus {
 }
 
 model PurchasedProduct {
-  id         String @id @default(uuid())
-  product_id String
-  transaction_id String      @unique
-  transaction    Transaction @relation(fields: [transaction_id], references: [id])
+  id             String      @id @default(uuid())
   download_link  String
   created_at     DateTime    @default(now())
   updated_at     DateTime    @updatedAt
+  transaction_id String      @unique
+  transaction    Transaction @relation(fields: [transaction_id], references: [id])
 }

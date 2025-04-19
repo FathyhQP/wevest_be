@@ -44,7 +44,7 @@ const getTransactionHistory = async (req, res) => {
       skip,
       take: limitNumber,
       include: {
-        product: {
+        digital_product: {
           select: {
             id: true,
             title: true,
