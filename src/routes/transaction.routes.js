@@ -4,7 +4,7 @@ const { createProductTransaction } = require("../controllers/transaction_control
 
 const transactionRouter = Router();
 
-transactionRouter.post("/transaction/:product_id", verifyToken, createProductTransaction);
+transactionRouter.post("/transaction/:digital_product_id", verifyToken, createProductTransaction);
 
 
 module.exports = transactionRouter;
